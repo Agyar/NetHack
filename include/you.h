@@ -351,6 +351,10 @@ struct you {
 	long ugallop;
 	int urideturns;
 #endif
+#ifdef ELDER
+  struct monst *elder;
+  short boozecount;
+#endif // ELDER
 	int	umortality;		/* how many times you died */
 	int ugrave_arise; /* you die and become something aside from a ghost */
 	time_t	ubirthday;		/* real world time when game began */

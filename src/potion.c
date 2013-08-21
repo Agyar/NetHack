@@ -1053,7 +1053,11 @@ boolean your_fault;
 		break;
 	case POT_CONFUSION:
 	case POT_BOOZE:
-		if(!resist(mon, POTION_CLASS, 0, NOTELL))  mon->mconf = TRUE;
+    #ifdef ELDER
+    if(is_mplayer(mon->data))
+    #else
+    if(!resist(mon, POTION_CLASS, 0, NOTELL))  mon->mconf = TRUE;
+    #endif // ELDER
 		break;
 	case POT_INVISIBILITY:
 		angermon = FALSE;

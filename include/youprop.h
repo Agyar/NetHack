@@ -133,6 +133,19 @@
 #define Hunger			(HHunger || EHunger)
 
 
+#ifdef ELDER
+/* Alcohol and Elder behavior, essentially intrinsics with timeout, no extrinsics possible */
+#define InspiredByAncestors   u.uprops[INSPIRED_BY_ANCESTORS].intrinsic     
+#define Inspired              u.uprops[INSPIRED].intrinsic
+#define Vindictive            u.uprops[VINDICTIVE].intrinsic
+#define Drunk                 u.uprops[DRUNK].intrinsic
+#define Lost                  u.uprops[LOST].intrinsic
+#define Hangover              u.uprops[HANGOVER].intrinsic
+#define DropDead              u.uprops[DROP_DEAD].intrinsic
+#define LowHeartbeat          u.uprops[LOW_HEARTBEAT].intrinsic
+#endif // ELDER
+
+
 /*** Vision and senses ***/
 #define HSee_invisible		u.uprops[SEE_INVIS].intrinsic
 #define ESee_invisible		u.uprops[SEE_INVIS].extrinsic

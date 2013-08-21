@@ -73,7 +73,20 @@
 #define INFRAVISION		64
 #define WARN_OF_MON		65
 #define DETECT_MONSTERS		66
+#ifdef ELDER
+#define INSPIRED_BY_ANCESTORS 67
+#define INSPIRED              68
+#define VINDICTIVE            69
+#define DRUNK                 70
+#define LOST                  71
+#define HANGOVER              72
+#define DROP_DEAD             73
+#define LOW_HEARTBEAT         74
+#define LAST_PROP		(LOW_HEARTBEAT)
+#else 
 #define LAST_PROP		(DETECT_MONSTERS)
+#endif // ELDER
+
 
 /*** Where the properties come from ***/
 /* Definitions were moved here from obj.h and you.h */

@@ -279,6 +279,14 @@ bot2()
 		Sprintf(nb = eos(nb), " ");
 		Strcat(newbot2, hu_stat[u.uhs]);
 	}
+#ifdef ELDER 
+  if(Inspired) Sprintf(nb = eos(nb), " Insp");
+  if(Vindictive) Sprintf(nb = eos(nb), " Vind");
+  if(Drunk) Sprintf(nb = eos(nb), " Drunk");
+  if(Lost) Sprintf(nb = eos(nb), " Lost");
+  if(DropDead) Sprintf(nb = eos(nb), " DDead");
+  if(Hangover) Sprintf(nb = eos(nb), " Hang");
+#endif // ELDER
 	if(Confusion)	   Sprintf(nb = eos(nb), " Conf");
 	if(Sick) {
 		if (u.usick_type & SICK_VOMITABLE)

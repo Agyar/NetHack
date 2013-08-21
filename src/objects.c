@@ -598,7 +598,9 @@ TOOL("lock pick", (char *)0,    1, 0, 0, 0,  75,  4,  20, IRON, HI_METAL),
 /* light sources */
 TOOL("tallow candle", "candle", 0, 1, 0, 0,  20,  2,  10, WAX, CLR_WHITE),
 TOOL("wax candle", "candle",    0, 1, 0, 0,   5,  2,  20, WAX, CLR_WHITE),
+#ifndef ELDER
 TOOL("brass lantern", (char *)0,1, 0, 0, 0,  30, 30,  12, COPPER, CLR_YELLOW),
+#endif // ELDER
 TOOL("oil lamp", "lamp",        0, 0, 0, 0,  45, 20,  10, COPPER, CLR_YELLOW),
 TOOL("magic lamp", "lamp",      0, 0, 1, 0,  15, 20,  50, COPPER, CLR_YELLOW),
 /* other tools */
@@ -633,6 +635,11 @@ TOOL("beartrap", (char *)0,     1, 0, 0, 0,   0,200,  60, IRON, HI_METAL),
 TOOL("tin whistle", "whistle",  0, 0, 0, 0, 100,  3,  10, METAL, HI_METAL),
 TOOL("magic whistle", "whistle",0, 0, 1, 0,  30,  3,  10, METAL, HI_METAL),
 /* "If tin whistles are made out of tin, what do they make foghorns out of?" */
+#ifdef ELDER
+TOOL("wooden smoking pipe", "smoking pipe", 0, 0, 0, 0, 15, 3, 10, WOOD, HI_WOOD),
+TOOL("magic smoking pipe", "smoking pipe", 0, 0, 1, 1, 15, 3, 50, WOOD, HI_WOOD),
+TOOL("brass lantern", (char *)0,1, 0, 0, 0,  0, 30,  12, COPPER, CLR_YELLOW),
+#endif // ELDER
 TOOL("wooden flute", "flute",   0, 0, 0, 0,   4,  5,  12, WOOD, HI_WOOD),
 TOOL("magic flute", "flute",    0, 0, 1, 1,   2,  5,  36, WOOD, HI_WOOD),
 TOOL("tooled horn", "horn",     0, 0, 0, 0,   5, 18,  15, BONE, CLR_WHITE),

@@ -5,8 +5,12 @@
 #ifndef QTEXT_H
 #define QTEXT_H
 
+#ifdef ELDER
+#define N_HDR	17		/* Maximum number of categories */
+#else
 #define N_HDR	16		/* Maximum number of categories */
-				/* (i.e., num roles + 1) */
+				            /* (i.e., num roles + 1) */
+#endif // ELDER
 #define LEN_HDR 3		/* Maximum length of a category name */
 
 struct qtmsg {
@@ -70,6 +74,9 @@ struct	qtlists {
 #define QT_BADLEVEL	19
 #define QT_BADALIGN	20
 #define QT_ASSIGNQUEST	21
+#ifdef ELDER
+#define QT_DRUNK 22
+#endif // ELDER
 
 #define QT_ENCOURAGE	25	/* 1-10 random encouragement messages */
 

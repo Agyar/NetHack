@@ -88,6 +88,12 @@ const struct innate {
 	wiz_abil[] = { {	15, &(HWarning), "sensitive", "" },
 		     {  17, &(HTeleport_control), "controlled","uncontrolled" },
 		     {	 0, 0, 0, 0 } },
+ 
+  #ifdef ELDER 
+  eld_abi[] = {  {  1, &(HStealth), "", "" },
+         {  5, &(HSearching), "perceptive", "unaware"},
+         {  11, &(HWarning), "sensitive", ""} },
+  #endif // ELDER
 
 	/* Intrinsics conferred by race */
 	elf_abil[] = { {	4, &(HSleep_resistance), "awake", "tired" },

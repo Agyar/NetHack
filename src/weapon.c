@@ -25,6 +25,9 @@
 #define PN_CLERIC_SPELL			(-12)
 #define PN_ESCAPE_SPELL			(-13)
 #define PN_MATTER_SPELL			(-14)
+#ifdef ELDER
+#define PN_DRINKING (-15)
+#endif // ELDER
 
 STATIC_DCL void FDECL(give_may_advance_msg, (int));
 
@@ -49,7 +52,11 @@ STATIC_VAR NEARDATA const short skill_names_indices[P_NUM_SKILLS] = {
 	PN_DIVINATION_SPELL, PN_ENCHANTMENT_SPELL,
 	PN_CLERIC_SPELL,     PN_ESCAPE_SPELL,
 	PN_MATTER_SPELL,
+#ifndef ELDER 
 	PN_BARE_HANDED,   PN_TWO_WEAPONS,
+#else 
+	PN_BARE_HANDED,   PN_TWO_WEAPONS, PN_DRINKING,
+#endif
 #ifdef STEED
 	PN_RIDING
 #endif
@@ -60,6 +67,9 @@ STATIC_VAR NEARDATA const char * const odd_skill_names[] = {
     "no skill",
     "bare hands",		/* use barehands_or_martial[] instead */
     "two weapon combat",
+    #ifdef ELDER
+    "drinking",
+    #endif // ELDER
     "riding",
     "polearms",
     "saber",
@@ -75,7 +85,11 @@ STATIC_VAR NEARDATA const char * const odd_skill_names[] = {
 };
 /* indexed vis `is_martial() */
 STATIC_VAR NEARDATA const char * const barehands_or_martial[] = {
+#ifndef ELDER
     "bare handed combat", "martial arts"
+#else
+    "bare handed combat", "martial arts", "drinking"
+#endif
 };
 
 STATIC_OVL void

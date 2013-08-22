@@ -495,6 +495,7 @@ peffects(otmp)
 		}
 		break;
 	case POT_BOOZE:
+    #ifndef ELDER
 		unkn++;
 		pline("Ooph!  This tastes like %s%s!",
 		      otmp->odiluted ? "watered down " : "",
@@ -511,6 +512,13 @@ peffects(otmp)
 			multi = -rnd(15);
 			nomovemsg = "You awake with a headache.";
 		}
+    #else 
+    if(urole.name.m == "Elder"){
+        (void) make_hallucinated(itimeout_incr(HHallucination,
+              rn1(200, 600 - 300 * bcsign(otmp))),
+            TRUE, 0L);
+    }
+    #endif // ELDER
 		break;
 	case POT_ENLIGHTENMENT:
 		if(otmp->cursed) {
@@ -1053,11 +1061,7 @@ boolean your_fault;
 		break;
 	case POT_CONFUSION:
 	case POT_BOOZE:
-    #ifdef ELDER
-    if(is_mplayer(mon->data))
-    #else
     if(!resist(mon, POTION_CLASS, 0, NOTELL))  mon->mconf = TRUE;
-    #endif // ELDER
 		break;
 	case POT_INVISIBILITY:
 		angermon = FALSE;

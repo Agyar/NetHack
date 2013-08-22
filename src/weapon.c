@@ -14,20 +14,18 @@
 #define PN_BARE_HANDED			(-1)	/* includes martial arts */
 #define PN_TWO_WEAPONS			(-2)
 #define PN_RIDING			(-3)
-#define PN_POLEARMS			(-4)
-#define PN_SABER			(-5)
-#define PN_HAMMER			(-6)
-#define PN_WHIP				(-7)
-#define PN_ATTACK_SPELL			(-8)
-#define PN_HEALING_SPELL		(-9)
-#define PN_DIVINATION_SPELL		(-10)
-#define PN_ENCHANTMENT_SPELL		(-11)
-#define PN_CLERIC_SPELL			(-12)
-#define PN_ESCAPE_SPELL			(-13)
-#define PN_MATTER_SPELL			(-14)
-#ifdef ELDER
-#define PN_DRINKING (-15)
-#endif // ELDER
+#define PN_DRINKING (-4)
+#define PN_POLEARMS			(-5)
+#define PN_SABER			(-6)
+#define PN_HAMMER			(-7)
+#define PN_WHIP				(-8)
+#define PN_ATTACK_SPELL			(-9)
+#define PN_HEALING_SPELL		(-10)
+#define PN_DIVINATION_SPELL		(-11)
+#define PN_ENCHANTMENT_SPELL		(-12)
+#define PN_CLERIC_SPELL			(-13)
+#define PN_ESCAPE_SPELL			(-14)
+#define PN_MATTER_SPELL			(-15)
 
 STATIC_DCL void FDECL(give_may_advance_msg, (int));
 
@@ -67,9 +65,7 @@ STATIC_VAR NEARDATA const char * const odd_skill_names[] = {
     "no skill",
     "bare hands",		/* use barehands_or_martial[] instead */
     "two weapon combat",
-    #ifdef ELDER
     "drinking",
-    #endif // ELDER
     "riding",
     "polearms",
     "saber",
@@ -88,6 +84,7 @@ STATIC_VAR NEARDATA const char * const barehands_or_martial[] = {
 #ifndef ELDER
     "bare handed combat", "martial arts"
 #else
+    // added drinking as a martial art
     "bare handed combat", "martial arts", "drinking"
 #endif
 };
@@ -1296,6 +1293,16 @@ const struct def_skill *class_skill;
 	if (urole.petnum == PM_PONY)
 	    P_SKILL(P_RIDING) = P_BASIC;
 #endif
+#ifdef ELDER
+  if(Role_if(PM_ELDER))
+  {
+      P_SKILL(P_DRINKING) = P_BASIC;
+      P_SKILL(P_RIDING) = P_BASIC;
+      P_SKILL(P_BARE_HANDED_COMBAT) = P_BASIC;
+      P_SKILL(P_ENCHANTMENT_SPELL) = P_BASIC;
+      P_SKILL(P_DIVINATION_SPELL) = P_BASIC;
+  }
+#endif // ELDER
 
 	/*
 	 * Make sure we haven't missed setting the max on a skill

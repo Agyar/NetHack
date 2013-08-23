@@ -70,6 +70,105 @@ boolean talk;
 	set_itimeout(&HConfusion, xtime);
 }
 
+#ifdef ELDER
+void
+make_inpired(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HInspired;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "inspired");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HInspired, xtime);
+}
+void
+make_vindictive(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HVindictive;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "vindictive");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HVindictive, xtime);
+}
+void
+make_drunk(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HDrunk;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "drunk");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HDrunk, xtime);
+}
+void
+make_lost(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HLost;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "lost");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HLost, xtime);
+}
+void
+make_hangover(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HHangover;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "hangovered");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HHangover, xtime);
+}
+void
+make_dropdead(xtime,talk)
+long xtime;
+boolean talk;
+{
+  long old = HDropDead;
+
+  if( !xtime && old) {
+    if (talk)
+      You_feel("less %s now.",
+         Hallucination ? "godly" : "drop dead");
+  }
+  if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
+
+  set_itimeout(&HDropDead, xtime);
+}
+#endif // ELDER
+
 void
 make_stunned(xtime,talk)
 long xtime;
@@ -513,10 +612,114 @@ peffects(otmp)
 			nomovemsg = "You awake with a headache.";
 		}
     #else 
+		unkn++;
     if(urole.name.m == "Elder"){
-        (void) make_hallucinated(itimeout_incr(HHallucination,
-              rn1(200, 600 - 300 * bcsign(otmp))),
+      if(!Inspired && !Vindictive && !Drunk && !Lost && !Hangover && !DropDead){
+        (void) make_inpired(itimeout_incr(HInspired,
+              d(6,16)),
             TRUE, 0L);
+        exercise(A_CON, TRUE);
+        You_feel("inspired by these spirits!");
+      }
+      else if (Inspired){
+        (void) make_vindictive(itimeout_incr(HVindictive,
+              d(6,16)+HInspired),
+            TRUE, 0L);
+        set_itimeout(&HInspired, 0L);
+        exercise(A_STR, TRUE);
+        You_feel("as new as the day you were born!");
+      }
+      else if (Vindictive){
+        (void) make_drunk(itimeout_incr(HDrunk,
+              d(6,16)+HVindictive),
+            TRUE, 0L);
+        set_itimeout(&HVindictive, 0L);
+        exercise(A_STR, TRUE);
+        exercise(A_CON, TRUE);
+        You_feel("had done the right thing! Oups!");
+      }
+      else if (Drunk){
+        (void) make_lost(itimeout_incr(HLost,
+              d(6,16)+HDrunk),
+            TRUE, 0L);
+        set_itimeout(&HDrunk, 0L);
+        exercise(A_WIS, FALSE);
+        You_feel("outside your body!");
+      }
+      else if (Lost){
+        (void) make_dropdead(itimeout_incr(HDropDead,
+              d(6,16)+HLost),
+            TRUE, 0L);
+        set_itimeout(&HLost, 0L);
+        if(Sleep_resistance || Free_action){
+          exercise(A_STR, FALSE);
+          exercise(A_WIS, FALSE);
+          exercise(A_CON, FALSE);
+          exercise(A_INT, FALSE);
+          exercise(A_DEX, FALSE);
+          You("yawn.");
+          make_sick(ACURR(A_CON)-8, (char *) 0, TRUE, SICK_VOMITABLE);
+        }
+        else {
+          You("fall in a life-saving sleep!");
+          nomul(HLost);
+          nomovemsg = "You awake with a headache.";
+          You_feel("the whole thing was a bad idea.");
+          (void) make_hangover(itimeout_incr(HHangover,
+                d(6,16)+HLost),
+              TRUE, 0L);
+          set_itimeout(&HDropDead, 0L);
+          exercise(A_CON, FALSE);
+        }
+      }
+      else if(DropDead){
+        if(!rn2(20))
+          vomit();
+        else {
+          (void) make_dropdead(itimeout_incr(HDropDead,
+                d(6,16)+HLost),
+              TRUE, 0L);
+          set_itimeout(&HLost, 0L);
+          if(Sleep_resistance || Free_action){
+            exercise(A_STR, FALSE);
+            exercise(A_WIS, FALSE);
+            exercise(A_CON, FALSE);
+            exercise(A_INT, FALSE);
+            exercise(A_DEX, FALSE);
+            You("yawn.");
+            make_sick(ACURR(A_CON)-8, (char *) 0, TRUE, SICK_VOMITABLE);
+          }
+          else {
+            You("fall in a life-saving sleep!");
+            /*fall_asleep(-rn1(10, 25 - 12*bcsign(otmp)), TRUE);*/
+            nomul(HLost);
+            nomovemsg = "You awake with a headache.";
+            You_feel("the whole thing was a bad idea.");
+            (void) make_hangover(itimeout_incr(HHangover,
+                  d(6,16)+HLost),
+                TRUE, 0L);
+            set_itimeout(&HDropDead, 0L);
+            exercise(A_CON, FALSE);
+          }
+        }
+      }
+    } else {
+      pline("Ooph!  This tastes like %s%s!",
+          otmp->odiluted ? "watered down " : "",
+          Hallucination ? "dandelion wine" : "liquid fire");
+      if (!otmp->blessed)
+        make_confused(itimeout_incr(HConfusion, d(3,8)), FALSE);
+      /* the whiskey makes us feel better */
+      if (!otmp->odiluted) healup(1, 0, FALSE, FALSE);
+      u.uhunger += 10 * (2 + bcsign(otmp));
+      newuhs(FALSE);
+      exercise(A_WIS, FALSE);
+      if(otmp->cursed) {
+        You("pass out.");
+        multi = -rnd(15);
+        nomovemsg = "You awake with a headache.";
+		}
+
     }
     #endif // ELDER
 		break;

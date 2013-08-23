@@ -135,14 +135,30 @@
 
 #ifdef ELDER
 /* Alcohol and Elder behavior, essentially intrinsics with timeout, no extrinsics possible */
-#define InspiredByAncestors   u.uprops[INSPIRED_BY_ANCESTORS].intrinsic     
-#define Inspired              u.uprops[INSPIRED].intrinsic
-#define Vindictive            u.uprops[VINDICTIVE].intrinsic
-#define Drunk                 u.uprops[DRUNK].intrinsic
-#define Lost                  u.uprops[LOST].intrinsic
-#define Hangover              u.uprops[HANGOVER].intrinsic
-#define DropDead              u.uprops[DROP_DEAD].intrinsic
-#define LowHeartbeat          u.uprops[LOW_HEARTBEAT].intrinsic
+#define HInspiredByAncestors   u.uprops[INSPIRED_BY_ANCESTORS].intrinsic     
+#define InspiredByAncestors   HInspiredByAncestors   
+
+#define HInspired              u.uprops[INSPIRED].intrinsic
+#define Inspired              HInspired              
+
+#define HVindictive            u.uprops[VINDICTIVE].intrinsic
+#define Vindictive            HVindictive            
+
+#define HDrunk                 u.uprops[DRUNK].intrinsic
+#define Drunk                 HDrunk                 
+
+#define HLost                  u.uprops[LOST].intrinsic
+#define Lost                  HLost                  
+
+#define HHangover              u.uprops[HANGOVER].intrinsic
+#define Hangover              HHangover              
+
+#define HDropDead              u.uprops[DROP_DEAD].intrinsic
+#define DropDead              HDropDead              
+
+#define HLowHeartbeat          u.uprops[LOW_HEARTBEAT].intrinsic
+#define LowHeartbeat          HLowHeartbeat          
+
 #endif // ELDER
 
 

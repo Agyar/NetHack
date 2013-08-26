@@ -34,6 +34,9 @@
 #define BY_ORACLE	0
 #define BY_COOKIE	1
 #define BY_PAPER	2
+#ifdef ELDER
+#define BY_INSPIRATION 3
+#endif // ELDER
 #define BY_OTHER	9
 
 #ifdef STEED

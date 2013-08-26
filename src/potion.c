@@ -83,6 +83,7 @@ boolean talk;
       You_feel("less %s now.",
          Hallucination ? "godly" : "inspired");
   }
+  outrumor(0,BY_INSPIRATION);
   if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
 
   set_itimeout(&HInspired, xtime);
@@ -615,33 +616,33 @@ peffects(otmp)
 		unkn++;
     if(urole.name.m == "Elder"){
       if(!Inspired && !Vindictive && !Drunk && !Lost && !Hangover && !DropDead){
-        make_inpired(itimeout_incr(HInspired, d(6,16)), TRUE);
+        make_inpired(itimeout_incr(HInspired, d(6*P_SKILL(P_DRINKING),16*P_SKILL(P_DRINKING))), TRUE);
         exercise(A_CON, TRUE);
         You_feel("inspired by these spirits!");
         u.udaminc += 2*P_SKILL(P_DRINKING);
       }
       else if (Inspired){
-        make_vindictive(itimeout_incr(HVindictive, d(6,16)+HInspired), TRUE);
+        make_vindictive(itimeout_incr(HVindictive, d(6*P_SKILL(P_DRINKING),16*P_SKILL(P_DRINKING))+HInspired), TRUE);
         set_itimeout(&HInspired, 0L);
         exercise(A_STR, TRUE);
         You_feel("as new as the day you were born!");
         u.udaminc += 2*P_SKILL(P_DRINKING);
       }
       else if (Vindictive){
-        make_drunk(itimeout_incr(HDrunk, d(6,16)+HVindictive), TRUE);
+        make_drunk(itimeout_incr(HDrunk, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HVindictive), TRUE);
         set_itimeout(&HVindictive, 0L);
         exercise(A_STR, TRUE);
         exercise(A_CON, TRUE);
         You_feel("have done the right thing!");
       }
       else if (Drunk){
-        make_lost(itimeout_incr(HLost, d(6,16)+HDrunk), TRUE);
+        make_lost(itimeout_incr(HLost, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HDrunk), TRUE);
         set_itimeout(&HDrunk, 0L);
         exercise(A_WIS, FALSE);
         You_feel("outside your body!");
       }
       else if (Lost){
-        (void) make_dropdead(itimeout_incr(HDropDead, d(6,16)+HLost), TRUE);
+        (void) make_dropdead(itimeout_incr(HDropDead, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HLost), TRUE);
         set_itimeout(&HLost, 0L);
         if(Sleep_resistance || Free_action){
           exercise(A_STR, FALSE);
@@ -657,7 +658,7 @@ peffects(otmp)
           nomul(HLost);
           nomovemsg = "You awake with a headache.";
           You_feel("the whole thing was a bad idea.");
-          make_hangover(itimeout_incr(HHangover, d(6,16)+HLost), TRUE);
+          make_hangover(itimeout_incr(HHangover, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HLost), TRUE);
           set_itimeout(&HDropDead, 0L);
           exercise(A_CON, FALSE);
         }
@@ -666,7 +667,7 @@ peffects(otmp)
         if(!rn2(20))
           vomit();
         else {
-          make_dropdead(itimeout_incr(HDropDead, d(6,16)+HLost), TRUE);
+          make_dropdead(itimeout_incr(HDropDead, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HLost), TRUE);
           set_itimeout(&HLost, 0L);
           if(Sleep_resistance || Free_action){
             exercise(A_STR, FALSE);
@@ -682,7 +683,7 @@ peffects(otmp)
             nomul(HLost);
             nomovemsg = "You awake with a headache.";
             You_feel("the whole thing was a bad idea.");
-            make_hangover(itimeout_incr(HHangover, d(6,16)+HLost), TRUE);
+            make_hangover(itimeout_incr(HHangover, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HLost), TRUE);
             set_itimeout(&HDropDead, 0L);
             exercise(A_CON, FALSE);
           }

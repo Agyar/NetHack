@@ -659,7 +659,7 @@ peffects(otmp)
         use_skill(P_DRINKING, 40-P_SKILL(P_DRINKING));
       }
       else if (Lost){
-        mae_dropdead(itimeout_incr(HLost,d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
+        make_dropdead(itimeout_incr(HLost,d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
         set_itimeout(&HLost, 0L);
         set_itimeout(&HStun, 0L);
         use_skill(P_DRINKING, 80-P_SKILL(P_DRINKING));

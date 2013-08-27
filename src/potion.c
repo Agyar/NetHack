@@ -642,12 +642,15 @@ peffects(otmp)
         set_itimeout(&HDrunk, 0L);
         // TODO case when increase P_DRINKING skill while Drunk and then drink one booze
         u.udaminc -= 2.5*P_SKILL(P_DRINKING);
+        u.uhitinc -= 6 - P_SKILL(P_DRINKING);
         exercise(A_WIS, FALSE);
         You_feel("outside your body!");
       }
       else if (Lost){
         (void) make_dropdead(itimeout_incr(HDropDead, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HLost), TRUE);
         set_itimeout(&HLost, 0L);
+        // TODO case when increase P_DRINKING skill while Lost and then drink one booze
+        u.uhitinc += 6 - P_SKILL(P_DRINKING);
         if(Sleep_resistance || Free_action){
           exercise(A_STR, FALSE);
           exercise(A_WIS, FALSE);

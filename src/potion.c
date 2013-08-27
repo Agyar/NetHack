@@ -103,6 +103,7 @@ boolean talk;
   if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
 
   set_itimeout(&HVindictive, xtime);
+  set_itimeout(&ERegeneration, xtime);
 }
 void
 make_drunk(xtime,talk)
@@ -619,18 +620,19 @@ peffects(otmp)
         make_inpired(itimeout_incr(HInspired, d(6*P_SKILL(P_DRINKING),16*P_SKILL(P_DRINKING))), TRUE);
         exercise(A_CON, TRUE);
         You_feel("inspired by these spirits!");
-        u.udaminc += 2*P_SKILL(P_DRINKING);
+        u.udaminc += 1*P_SKILL(P_DRINKING);
       }
       else if (Inspired){
         make_vindictive(itimeout_incr(HVindictive, d(6*P_SKILL(P_DRINKING),16*P_SKILL(P_DRINKING))+HInspired), TRUE);
         set_itimeout(&HInspired, 0L);
         exercise(A_STR, TRUE);
         You_feel("as new as the day you were born!");
-        u.udaminc += 2*P_SKILL(P_DRINKING);
+        u.udaminc += 1.5*P_SKILL(P_DRINKING);
       }
       else if (Vindictive){
         make_drunk(itimeout_incr(HDrunk, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HVindictive), TRUE);
         set_itimeout(&HVindictive, 0L);
+        set_itimeout(&ERegeneration, 0L);
         exercise(A_STR, TRUE);
         exercise(A_CON, TRUE);
         You_feel("have done the right thing!");
@@ -638,6 +640,8 @@ peffects(otmp)
       else if (Drunk){
         make_lost(itimeout_incr(HLost, d((6-P_SKILL(P_DRINKING))*6,(6-P_SKILL(P_DRINKING))*16)+HDrunk), TRUE);
         set_itimeout(&HDrunk, 0L);
+        // TODO case when increase P_DRINKING skill while Drunk and then drink one booze
+        u.udaminc -= 2.5*P_SKILL(P_DRINKING);
         exercise(A_WIS, FALSE);
         You_feel("outside your body!");
       }

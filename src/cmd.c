@@ -1044,6 +1044,14 @@ int final;	/* 0 => still in progress; 1 => over, survived; 2 => dead */
 	if (u.twoweap) you_are("wielding two weapons at once");
 
 	/*** Miscellany ***/
+  #ifdef ELDER
+  if(Inspired) you_are("inspired");
+  if(Vindictive) you_are("vindictive");
+  if(Drunk) you_are("drunk");
+  if(Lost) you_are("lost"); 
+  if(DropDead) you_are("dropdead");
+  if(Hangover) you_have("an hangover");
+  #endif // ELD
 	if (Luck) {
 	    ltmp = abs((int)Luck);
 	    Sprintf(buf, "%s%slucky",

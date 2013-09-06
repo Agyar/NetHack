@@ -169,6 +169,9 @@ int mechanism;
 		verbalize("%s", line);
 		exercise(A_WIS, TRUE);
 		return;
+		case BY_INSPIRATION:
+		pline("You feel the spirits whispering to you. They say:");
+		break;
 	    case BY_COOKIE:
 		pline(fortune_msg);
 		/* FALLTHRU */

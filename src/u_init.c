@@ -96,6 +96,20 @@ static struct trobj Monk[] = {
 	{ FORTUNE_COOKIE, 0, FOOD_CLASS, 3, UNDEF_BLESS },
 	{ 0, 0, 0, 0, 0 }
 };
+#ifdef ELDER 
+static struct trobj Elder[] = {
+  { QUARTERSTAFF, 2, WEAPON_CLASS, 1, UNDEF_BLESS },
+  { APPLE, 0, FOOD_CLASS, 15, UNDEF_BLESS },
+  { ORANGE, 0, FOOD_CLASS, 15, UNDEF_BLESS },
+  { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, 1 },
+  { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, UNDEF_BLESS },
+  { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, 0 },
+  { ROBE, 0, ARMOR_CLASS, 1, 1 },
+  { POT_HEALING, 1, POTION_CLASS, 2, UNDEF_BLESS },
+  { POT_BOOZE, 2, POTION_CLASS, 6, UNDEF_BLESS },
+  { 0, 0, 0, 0, 0 }
+};
+#endif // ELDER
 static struct trobj Priest[] = {
 	{ MACE, 1, WEAPON_CLASS, 1, 1 },
 	{ ROBE, 0, ARMOR_CLASS, 1, UNDEF_BLESS },
@@ -199,6 +213,12 @@ static struct trobj Xtra_food[] = {
 	{ UNDEF_TYP, UNDEF_SPE, FOOD_CLASS, 2, 0 },
 	{ 0, 0, 0, 0, 0 }
 };
+#ifdef ELDER
+static struct trobj SmokingPipe[] = {
+  { MAGIC_SMOKING_PIPE, 1, TOOL_CLASS, 1, 0 },
+  { 0, 0, 0, 0, 0 }
+};
+#endif // ELDER
 #ifdef TOURIST
 static struct trobj Leash[] = {
 	{ LEASH, 0, TOOL_CLASS, 1, 0 },
@@ -426,6 +446,21 @@ static const struct def_skill Skill_S[] = {
     { P_NONE, 0 }
 };
 
+#ifdef ELDER
+static const struct def_skill Skill_E[] = {
+  { P_QUARTERSTAFF, P_EXPERT }, { P_DAGGER, P_EXPERT },
+  { P_ATTACK_SPELL, P_BASIC },	{ P_HEALING_SPELL, P_BASIC },
+  { P_DIVINATION_SPELL, P_EXPERT },	{ P_ENCHANTMENT_SPELL, P_SKILLED },
+  { P_CLERIC_SPELL, P_BASIC },	{ P_ESCAPE_SPELL, P_EXPERT },
+  { P_MATTER_SPELL, P_BASIC }, { P_DRINKING, P_MASTER },
+#ifdef STEED
+  { P_RIDING, P_SKILLED },
+#endif
+  { P_BARE_HANDED_COMBAT, P_SKILLED },
+  { P_NONE, 0 }
+};
+#endif // ELDER
+
 #ifdef TOURIST
 static const struct def_skill Skill_T[] = {
     { P_DAGGER, P_EXPERT },		{ P_KNIFE,  P_SKILLED },
@@ -648,6 +683,17 @@ u_init()
 		HJumping |= FROMOUTSIDE;
 		skill_init(Skill_K);
 		break;
+#ifdef ELDER
+	case PM_ELDER:
+		ini_inv(Elder);
+		if(!rn2(10)) ini_inv(Magicmarker);
+		else if(!rn2(10)) ini_inv(SmokingPipe);
+		knows_class(ARMOR_CLASS);
+		knows_class(WEAPON_CLASS);
+		knows_object(POT_BOOZE);
+		skill_init(Skill_E);
+		break;
+#endif // ELDER
 	case PM_MONK:
 		switch (rn2(90) / 30) {
 		case 0: Monk[M_BOOK].trotyp = SPE_HEALING; break;
@@ -867,6 +913,9 @@ int otyp;
 #ifdef TOURIST
      case PM_TOURIST:		skills = Skill_T; break;
 #endif
+#ifdef ELDER
+     case PM_ELDER:     skills = Skill_E; break;
+#endif // ELDER
      case PM_VALKYRIE:		skills = Skill_V; break;
      case PM_WIZARD:		skills = Skill_W; break;
      default:			skills = 0; break;	/* lint suppression */

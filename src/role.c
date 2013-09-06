@@ -180,6 +180,34 @@ const struct Role roles[] = {
 	{  2, 2,  0, 2,  0, 2 },10,	/* Energy */
 	10, 8,-2, 2, 20, A_WIS, SPE_RESTORE_ABILITY, -4
 },
+#ifdef ELDER 
+{ {"Elder", 0}, {
+  {"Tale Bearer",  0},
+  {"Storyteller",  0},
+  {"Mythologist",  0},
+  {"Trustworthy",  0},
+  {"Sage Apprentice",  0},
+  {"Wisdom Seeker",  0},
+  {"Sage",  0},
+  {"Man of Wisdom",  "Woman of Wisdom"},
+  {"Inspired of Gods",  0} },
+  "Anshur", "Nabu", "Ereshkigal", /* mesopotamian deities */
+  "Eld", "the Tower of Babel", "the Sanctuary of the Sebitti",
+  PM_ELDER, NON_PM, NON_PM,
+	PM_LORD_CARNARVON, PM_STUDENT, PM_MINION_OF_HUHETOTL,
+	NON_PM, PM_HUMAN_MUMMY, S_SNAKE, S_MUMMY,
+	ART_ORB_OF_DETECTION,
+	MH_HUMAN|MH_ORC|MH_DWARF|ROLE_MALE|ROLE_FEMALE |
+	  ROLE_NEUTRAL|ROLE_CHAOTIC|ROLE_LAWFUL,
+	/* Str Int Wis Dex Con Cha */
+	{   7, 7, 10,  7,  7,  7 },
+	{  20, 10, 20, 15, 20, 10 },
+	/* Init   Lower  Higher */
+	{ 11, 0,  0, 8,  1, 0 },	/* Hit points */
+	{  4, 3,  0, 2,  0, 3 },12,	/* Energy */
+	10, 5, 0, 2, 10, A_WIS, SPE_SLEEP,   -4
+},
+#endif // ELDER 
 {	{"Priest", "Priestess"}, {
 	{"Aspirant",    0},
 	{"Acolyte",     0},

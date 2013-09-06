@@ -1,0 +1,8 @@
+-- fix include/qtext.h missing comment line
+-- fix include/unixconf.h missing #endif
+-- fix booze behavior consistency 
+-- fix src/objects.c stats consistency
+
+-- remove include/you.h useless data
+
+-- finish src/role.c elder consistency

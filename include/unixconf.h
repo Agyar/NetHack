@@ -134,6 +134,7 @@
  */
 
 /* #define TIMED_DELAY */	/* usleep() */
+#endif
 
 /*
  * If you define MAIL, then the player will be notified of new mail

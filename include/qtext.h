@@ -9,7 +9,7 @@
 #define N_HDR	17		/* Maximum number of categories */
 #else
 #define N_HDR	16		/* Maximum number of categories */
-#endif // ELDER
+#endif // ELDER 		/* (i.e., num roles + 1) */
 #define LEN_HDR 3		/* Maximum length of a category name */
 
 struct qtmsg {

@@ -1331,6 +1331,13 @@ int final;
 	    you_have_X(buf);
 	}
 #endif
+#ifdef ELDER
+  if (!u.uconduct.alcoholic)
+    you_have_never("drank any alcohols");
+  else if(u.uconduct.sober)
+    Sprintf(buf, "sober for %ld turn%s",
+        u.uconduct.sober, plur(u.uconduct.sober));
+#endif // ELD
 
 	if (!u.uconduct.wishes)
 	    you_have_X("used no wishes");

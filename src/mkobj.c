@@ -150,6 +150,9 @@ struct obj *box;
 	case SACK:
 	case OILSKIN_SACK:
 				/* initial inventory: sack starts out empty */
+        #ifdef ELDER
+        if(urole.name.m == "Elder") { n = 20; break; }
+        #endif // ELDER
 				if (moves <= 1 && !in_mklev) { n = 0; break; }
 				/*else FALLTHRU*/
 	case BAG_OF_HOLDING:	n = 1; break;
@@ -167,7 +170,8 @@ struct obj *box;
 		    (void) stop_timer(ROT_CORPSE, (genericptr_t)otmp);
 		    (void) stop_timer(REVIVE_MON, (genericptr_t)otmp);
 		}
-	    } else {
+      } 
+      else {
 		register int tprob;
 		const struct icp *iprobs = boxiprobs;
 
@@ -175,6 +179,18 @@ struct obj *box;
 		    ;
 		if (!(otmp = mkobj(iprobs->iclass, TRUE))) continue;
 
+    #ifdef ELDER
+    if (box->otyp == OILSKIN_SACK && urole.name.m=="Elder")
+    {
+      otmp->oclass=FOOD_CLASS;
+      otmp->spe=0;
+      otmp->quan=rn2(10)+1;
+      otmp->otyp= rn2(100) >= 50 ? 
+        (rn2(100) >= 50 ? BANANA : APPLE):
+        (rn2(100) >= 50 ? PEAR : ORANGE);
+      otmp->owt=weight(otmp);
+    } else {
+    #endif // ELDER
 		/* handle a couple of special cases */
 		if (otmp->oclass == COIN_CLASS) {
 		    /* 2.5 x level's usual amount; weight adjusted below */
@@ -194,6 +210,9 @@ struct obj *box;
 			    otmp->otyp = rnd_class(WAN_LIGHT, WAN_LIGHTNING);
 		}
 	    }
+    #ifdef ELDER
+      }
+    #endif // ELD
 	    (void) add_to_container(box, otmp);
 	}
 }

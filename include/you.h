@@ -58,6 +58,8 @@ struct u_event {
  * times a challenge has been violated.
  */
 struct u_conduct {		/* number of times... */
+  long  alcoholic;
+  long  sober;
 	long	unvegetarian;	/* eaten any animal */
 	long	unvegan;	/* ... or any animal byproduct */
 	long	food;		/* ... or any comestible */

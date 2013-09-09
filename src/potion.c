@@ -615,6 +615,8 @@ peffects(otmp)
 		}
     #else 
 		unkn++;
+    u.uconduct.alcoholic=1;
+    u.uconduct.sober=0;
     if(urole.name.m == "Elder"){
       if(!Inspired && !Vindictive && !Drunk && !Lost && !Hangover && !DropDead){
         make_inpired(itimeout_incr(HInspired, d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);

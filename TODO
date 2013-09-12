@@ -1,7 +1,17 @@
--- fix include/qtext.h missing comment line
--- fix booze behavior consistency 
 -- fix src/objects.c stats consistency
 
 -- remove include/you.h useless data
 
 -- finish src/role.c elder consistency
+
+-- killing a ghost give its knowledge to elder
+   -- elder have a chance of becoming mad each time he does this
+
+-- as the elder go further in the game, its body starts to fall apart 
+   -- cannot be healed by an unicorn horn
+   -- the game must be a run against the time
+   -- the class must be powerfull enough to be able to win before dying
+
+-- create a quest artifact
+   -- idea : when invoked, artifact may teleport player to a RANDOM lvl 
+             with bones file.

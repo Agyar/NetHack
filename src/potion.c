@@ -1558,6 +1558,7 @@ register struct obj *o1, *o2;
 		swp = o1; o1 = o2; o2 = swp;
 	}
 
+  const char *potion_descr;
 	switch (o1->otyp) {
 		case POT_HEALING:
 			switch (o2->otyp) {
@@ -1588,6 +1589,24 @@ register struct obj *o1, *o2;
 				return POT_WATER;
 			}
 			break;
+#ifdef ELDER
+    case ORANGE:
+    case PEAR:
+    case BANANA:
+    case MELON:
+    case APPLE:
+      potion_descr = OBJ_DESCR(objects[o2->otyp]);
+      if (!strcmp(potion_descr, "bubbly") ||
+          !strcmp(potion_descr, "effervescent") ||
+          !strcmp(potion_descr, "fizzy") ||
+          !strcmp(potion_descr, "swirly"))
+        return (rn2(3)) ? POT_BOOZE : o2->otyp;
+      else if (o2->cursed)
+        return (rn2(3)) ? o2->otyp : POT_SICKNESS;
+      else if (o2->odiluted)
+        return (rn2(3)) ? o2->otyp : POT_FRUIT_JUICE;
+      break;
+#endif // ELDER
 		case AMETHYST:		/* "a-methyst" == "not intoxicated" */
 			if (o2->otyp == POT_BOOZE)
 			    return POT_FRUIT_JUICE;

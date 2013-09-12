@@ -99,8 +99,6 @@ static struct trobj Monk[] = {
 #ifdef ELDER 
 static struct trobj Elder[] = {
   { QUARTERSTAFF, 2, WEAPON_CLASS, 1, UNDEF_BLESS },
-  /*{ APPLE, 0, FOOD_CLASS, 15, UNDEF_BLESS },*/
-  /*{ ORANGE, 0, FOOD_CLASS, 15, UNDEF_BLESS },*/
   { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, 1 },
   { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, UNDEF_BLESS },
   { UNDEF_TYP, UNDEF_SPE, SCROLL_CLASS, 1, 0 },

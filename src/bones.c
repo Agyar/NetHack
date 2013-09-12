@@ -441,11 +441,23 @@ getbones()
 #endif
 				mongone(mtmp);
 			    } else
+#ifdef ELDER
+          {
+            if (urole.name.m != "Elder")
+              resetobjs(mtmp->minvent,TRUE);
+          } 
+      }
+      if (urole.name.m != "Elder"){
+        resetobjs(fobj,TRUE);
+        resetobjs(level.buriedobjlist,TRUE);
+      }
+#else // ELDER
 				/* to correctly reset named artifacts on the level */
 				resetobjs(mtmp->minvent,TRUE);
 			}
 			resetobjs(fobj,TRUE);
 			resetobjs(level.buriedobjlist,TRUE);
+#endif
 		}
 	}
 	(void) close(fd);

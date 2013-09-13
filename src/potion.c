@@ -1594,6 +1594,7 @@ register struct obj *o1, *o2;
     case PEAR:
     case BANANA:
     case MELON:
+    case CARROT:
     case APPLE:
       potion_descr = OBJ_DESCR(objects[o2->otyp]);
       if (!strcmp(potion_descr, "bubbly") ||
@@ -1902,7 +1903,13 @@ dodip()
 	    }
 	    potion->in_use = FALSE;	/* didn't go poof */
 	    return(1);
+#ifdef ELDER
+	} else if((obj->oclass == POTION_CLASS && obj->otyp != potion->otyp) || 
+            (obj->oclass == FOOD_CLASS && urole.uname.m == "Elder")) {
+#else
 	} else if(obj->oclass == POTION_CLASS && obj->otyp != potion->otyp) {
+#endif // ELDER
+      
 		/* Mixing potions is dangerous... */
 		pline_The("potions mix...");
 		/* KMH, balance patch -- acid is particularly unstable */

@@ -89,9 +89,10 @@ boolean talk;
   set_itimeout(&HInspired, xtime);
 }
 void
-make_vindictive(xtime,talk)
+make_vindictive(xtime,talk, old_p_drinking)
 long xtime;
 boolean talk;
+short old_p_drinking;
 {
   long old = HVindictive;
 
@@ -103,7 +104,7 @@ boolean talk;
   if ((xtime && !old) || (!xtime && old)) flags.botl = TRUE;
 
   set_itimeout(&HVindictive, xtime);
-  set_itimeout(&ERegeneration, xtime);
+  set_itimeout(&HRegeneration, xtime);
 }
 void
 make_drunk(xtime,talk)
@@ -620,7 +621,6 @@ peffects(otmp)
     if(urole.name.m == "Elder"){
       if(!Inspired && !Vindictive && !Drunk && !Lost && !Hangover && !DropDead){
         make_inpired(itimeout_incr(HInspired, d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
-        pline("%d", HInspired);
         exercise(A_CON, TRUE);
         You_feel("inspired by these spirits!");
         u.udaminc += 1*P_SKILL(P_DRINKING);
@@ -628,7 +628,6 @@ peffects(otmp)
       }
       else if (Inspired){
         make_vindictive(itimeout_incr(HInspired,d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
-        pline("%d", HVindictive);
         set_itimeout(&HInspired, 0L);
         exercise(A_STR, TRUE);
         You_feel("as new as the day you were born!");
@@ -638,10 +637,9 @@ peffects(otmp)
       else if (Vindictive){
         make_drunk(itimeout_incr(HVindictive,d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
         make_confused(itimeout_incr(HDrunk,0), TRUE);
-        pline("%d", HDrunk);
         u.uhitinc -= 6 - P_SKILL(P_DRINKING);
         set_itimeout(&HVindictive, 0L);
-        set_itimeout(&ERegeneration, 0L);
+        set_itimeout(&HRegeneration, 0L);
         exercise(A_STR, TRUE);
         exercise(A_CON, TRUE);
         You_feel("you have done the right thing!");
@@ -650,8 +648,6 @@ peffects(otmp)
       else if (Drunk){
         make_lost(itimeout_incr(HDrunk,d(4*P_SKILL(P_DRINKING),8*P_SKILL(P_DRINKING))), TRUE);
         make_stunned(itimeout_incr(HLost,0), TRUE);
-        pline("%d", HLost);
-        pline("drinking skill: %d", P_SKILL(P_DRINKING));
         set_itimeout(&HDrunk, 0L);
         set_itimeout(&HConfusion, 0L);
         // TODO case when increase P_DRINKING skill while Drunk and then drink one booze
@@ -1905,7 +1901,7 @@ dodip()
 	    return(1);
 #ifdef ELDER
 	} else if((obj->oclass == POTION_CLASS && obj->otyp != potion->otyp) || 
-            (obj->oclass == FOOD_CLASS && urole.uname.m == "Elder")) {
+            (obj->oclass == FOOD_CLASS && urole.name.m == "Elder")) {
 #else
 	} else if(obj->oclass == POTION_CLASS && obj->otyp != potion->otyp) {
 #endif // ELDER

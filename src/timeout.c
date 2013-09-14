@@ -299,6 +299,16 @@ nh_timeout()
 			heal_legs();
 			stop_occupation();
 			break;
+		case INSPIRED:
+			// TODO should take into account if P_DRINKING as been increase before the end
+			u.udaminc -= 1*P_SKILL(P_DRINKING);
+			You_feel("you lost something good somewhere.");
+			break;
+		case VINDICTIVE:
+			// TODO should take into account if P_DRINKING as been increase before the end
+			u.udaminc -= 2.5*P_SKILL(P_DRINKING);
+			You_feel("you could do it again!");
+			break;
 		case HALLUC:
 			HHallucination = 1;
 			(void) make_hallucinated(0L, TRUE, 0L);
